@@ -1,0 +1,27 @@
+main
+{
+	c = 1;
+	
+	while (c <= 10)
+	{
+		print(fibonach(c));
+		c = c + 1;
+	}
+}
+
+fibonach (x)
+{
+	if (x == 0)
+	{
+		return 0;
+	}
+	
+	if (x == 1)
+	{
+		return 1;
+	}
+
+	c = fibonach(x - 1) + fibonach(x - 2);
+	
+	return c;
+}
