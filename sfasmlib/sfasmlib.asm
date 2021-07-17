@@ -2,38 +2,38 @@
 .model flat, stdcall
 option casemap: none
 
-include    			D:\masm32\include\msvcrt.inc
-include    			D:\masm32\include\kernel32.inc
-include    			D:\masm32\include\windows.inc
+include                 D:\masm32\include\msvcrt.inc
+include                 D:\masm32\include\kernel32.inc
+include                 D:\masm32\include\windows.inc
 
-includelib 			D:\masm32\lib\kernel32.lib
-includelib 			D:\masm32\lib\user32.lib
-includelib 			D:\masm32\lib\Exit_label
+includelib              D:\masm32\lib\kernel32.lib
+includelib              D:\masm32\lib\user32.lib
+includelib              D:\masm32\lib\Exit_label
 
 STD_OUTPUT_HANDLE   equ -11d
 STD_INPUT_HANDLE    equ -10d
 
 
-GetStdHandle    	proto :dword
-WriteConsoleA   	proto :dword, :dword, :dword, :dword, :dword
-ReadConsole     	proto :dword, :dword, :dword, :dword, :dword
-ExitProcess     	proto :dword
+GetStdHandle            proto :dword
+WriteConsoleA           proto :dword, :dword, :dword, :dword, :dword
+ReadConsole             proto :dword, :dword, :dword, :dword, :dword
+ExitProcess             proto :dword
 
-WriteSym        	proto :byte    
-Atoi            	proto  
+WriteSym                proto :byte    
+Atoi                    proto  
 
-GetNumber       	proto
-ToDec           	proto :dword
-ExitProgram     	proto
+GetNumber               proto
+ToDec                   proto :dword
+ExitProgram             proto
 
 
 .data
-smbol           	db 0
-hex             	db "0123456789abcdef"
-temp_string     	db 64 dup (0)
+smbol                   db 0
+hex                     db "0123456789abcdef"
+temp_string             db 64 dup (0)
                 			
-bytesRead       	dw 0
-hInput          	dd 0
+bytesRead               dw 0
+hInput                  dd 0
 
 
 .code
@@ -77,7 +77,7 @@ WriteSym        endp
 
 ;==========================================================================
 COMMENT @
-                Useful define for PrintNumber function
+        Useful define for PrintNumber function
 @
 ;==========================================================================
 DivTen          macro ExitLabel, NextLabel
@@ -134,7 +134,7 @@ Convert:
                 xor edx, edx
                 
 Next:
-				div ebx                 ; eax = eax / ebx
+                div ebx                 ; eax = eax / ebx
                                         ; edx = eax % ebx
                 add al, '0'             ; al = '0'
                 invoke WriteSym, al     ; putchar(al)
@@ -142,12 +142,12 @@ Next:
                 DivTen EndPrint, Next
 
 Zero:
-				invoke WriteSym, '0'
+                invoke WriteSym, '0'
 				
 EndPrint:
-			 	invoke WriteSym, 10
+                invoke WriteSym, 10
 			 	
-				pop ebx
+                pop ebx
                 pop edx
                 pop eax
                 
@@ -261,9 +261,9 @@ LibMain proc hInstDLL:dword, reason:dword, unused:dword
     			.elseif reason == DLL_PROCESS_DETACH
     			mov eax, FALSE 
 			
-			    .endif
+                        .endif
 			
-			    ret
+                        ret
 
 LibMain endp
 
