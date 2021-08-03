@@ -10,8 +10,8 @@ includelib              D:\masm32\lib\kernel32.lib
 includelib              D:\masm32\lib\user32.lib
 includelib              D:\masm32\lib\Exit_label
 
-STD_OUTPUT_HANDLE   equ -11d
-STD_INPUT_HANDLE    equ -10d
+STD_OUTPUT_HANDLE equ   -11d
+STD_INPUT_HANDLE  equ   -10d
 
 
 GetStdHandle            proto :dword
@@ -253,19 +253,19 @@ ExitProgram     endp
 ;==========================================================================
 ; Main function, this is the DLL entry point that Windows will call
 ;==========================================================================
-LibMain proc hInstDLL:dword, reason:dword, unused:dword 
+LibMain         proc hInstDLL:dword, reason:dword, unused:dword 
 
-		    	.if reason == DLL_PROCESS_ATTACH
-	         	mov eax, TRUE                  ; return TRUE so DLL will start
+                .if reason == DLL_PROCESS_ATTACH
+                mov eax, TRUE                  ; return TRUE so DLL will start
 
-    			.elseif reason == DLL_PROCESS_DETACH
-    			mov eax, FALSE 
+                .elseif reason == DLL_PROCESS_DETACH
+                mov eax, FALSE 
 			
-                        .endif
+                .endif
 			
-                        ret
+                ret
 
-LibMain endp
+LibMain         endp
 
 end LibMain
 ;==========================================================================
