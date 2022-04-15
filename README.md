@@ -29,7 +29,7 @@ Functions `print` and `scan` are supported by `sfasmlib.dll` library (Simple and
 
 How is was alreadu noticed, the usage of CMM language is the same except compilation:
 ```batch
-"lang_compile.exe" program.tree program.exe
+./lang_compile.exe program.tree program.exe
 ```
 
 ## General boost

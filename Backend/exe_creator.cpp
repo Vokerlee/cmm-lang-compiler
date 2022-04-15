@@ -84,7 +84,7 @@ void fill_dos_header (IMAGE_DOS_HEADER *dos_header)
     dos_header->e_minalloc = 0x0010;
     dos_header->e_maxalloc = 0xFFFF;
 
-    dos_header->e_sp       = 0x00B8;    
+    dos_header->e_sp       = 0x00B8;
     dos_header->e_lfarlc   = 0x0040;
 
     dos_header->e_lfanew   = 0x00B0;    // The beginning of NT Header
@@ -92,7 +92,7 @@ void fill_dos_header (IMAGE_DOS_HEADER *dos_header)
 
 void fill_NT_header (IMAGE_NT_HEADERS *NT_header, int NUM_OF_SEC)
 {
-    NT_header->Signature = '\0EP\0';
+    NT_header->Signature = 'EP';
 
     fill_NT_file_header(&(NT_header->FileHeader), NUM_OF_SEC);
     fill_NT_optional_header(&(NT_header->OptionalHeader));
