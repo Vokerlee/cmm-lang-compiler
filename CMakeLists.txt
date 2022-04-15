@@ -105,22 +105,22 @@ target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
 target_link_libraries(${LANG_OPTIMIZER_NAME} ${TEXT_LIB_PATH})
 target_link_libraries(${LANG_OPTIMIZER_NAME} ${TREE_LIB_PATH})
 
-# # LANG REVERSED FRONTEND
+# LANG REVERSED FRONTEND
 
-# set(CMM_REV_FRONTEND_NAME "cmm_frontend_rev")
+set(CMM_REV_FRONTEND_NAME "cmm_frontend_rev")
 
-# set(CMM_REV_FRONTEND_SRC
-#     frontend_reversed/main.cpp
-#     frontend_reversed/frontend_rev.cpp
-#     frontend_reversed/tree_reading.cpp
-# )
+set(CMM_REV_FRONTEND_SRC
+    frontend_reversed/main.cpp
+    frontend_reversed/frontend_rev.cpp
+    frontend_reversed/tree_reading.cpp
+)
 
-# add_executable(${CMM_REV_FRONTEND_NAME} ${CMM_REV_FRONTEND_SRC})
+add_executable(${CMM_REV_FRONTEND_NAME} ${CMM_REV_FRONTEND_SRC})
 
-# target_include_directories(${CMM_REV_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
-# target_include_directories(${CMM_REV_FRONTEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
-# target_link_libraries(${CMM_REV_FRONTEND_NAME} ${TEXT_LIB_PATH})
-# target_link_libraries(${CMM_REV_FRONTEND_NAME} ${TREE_LIB_PATH})
+target_include_directories(${CMM_REV_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
+target_include_directories(${CMM_REV_FRONTEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
+target_link_libraries(${CMM_REV_FRONTEND_NAME} ${TEXT_LIB_PATH})
+target_link_libraries(${CMM_REV_FRONTEND_NAME} ${TREE_LIB_PATH})
 
 # # LANG BACKEND
 
