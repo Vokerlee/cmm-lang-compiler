@@ -27,10 +27,27 @@ All generated programs are always `32 bit`.
 
 Functions `print` and `scan` are supported by `sfasmlib.dll` library (Simple and Fast Assembler Library), which imports `PrintNumber` and `GetNumber` functions and uses `kernel32.lib`. Also this library imports `ExitProgram`, which calls `ExitProcess` function.
 
-How is was alreadu noticed, the usage of CMM language is the same except compilation:
+How is was already noticed, the usage of CMM language is the same except compilation:
 ```batch
 ./lang_compile.exe program.tree program.exe
 ```
+
+## Compilation && Usage
+
+First, you should build the project. Clone current repository:
+
+```bash
+git clone --recurse-submodules https://github.com/Vokerlee/CMM-Compiler.git
+```
+
+Then enter cloned repository and create build directory and use `cmake` like this:
+
+```bash
+mkdir build && cd build
+cmake ..
+```
+
+Now you can use any build system you desire (like `Ninja`) and build the project.
 
 ## General boost
 
