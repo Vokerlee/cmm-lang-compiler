@@ -30,10 +30,10 @@ int ERROR_STATE = 0;
     create_tree_element(VAR, value, nullptr, nullptr)
 
 
-void frontend (FILE *program, FILE *lang_tree)
+int frontend (FILE *program, FILE *lang_tree)
 {
-    assert(program);
-    assert(lang_tree);
+    if (program == NULL || lang_tree == NULL)
+        return -1;
 
     bin_tree tree = {};
     construct_tree(&tree, "tree");
@@ -50,13 +50,14 @@ void frontend (FILE *program, FILE *lang_tree)
     if (tree.root == nullptr)
     {
         destruct_tree(&tree);
-
-        return;
+        return -1;
     }
 
     record_tree(&tree, &var, lang_tree);
 
     destruct_tree(&tree);
+
+    return 0;
 }
 
 void fill_tree (bin_tree *tree, FILE *program, variables *var, elements *elem)
@@ -81,11 +82,11 @@ void fill_tree (bin_tree *tree, FILE *program, variables *var, elements *elem)
             while (isdigit(*(text.counter)) || *(text.counter) == '.' || *(text.counter) == '-')
                 text.counter++;
 
-            elem->elements_[elem->curr_size_++] = create_tree_element(NUM, (int) value, nullptr, nullptr);
+            elem->elements_[elem->curr_size_++] = create_tree_element(NUM, value, nullptr, nullptr);
         }
         else if (isalpha(*(text.counter)))
         {
-            char *temp_var_name = (char *) calloc(MAX_VAR_NAME_LENGTH + 1, sizeof(char));
+            char temp_var_name[MAX_VAR_NAME_LENGTH + 1] = {0};
             char *start = text.counter;
             int num_var = 0;
 
@@ -137,8 +138,6 @@ void fill_tree (bin_tree *tree, FILE *program, variables *var, elements *elem)
                         break;
                 }
             }
-
-            free(temp_var_name);
         }
         else if (*(text.counter) == '+')
         {
@@ -158,6 +157,11 @@ void fill_tree (bin_tree *tree, FILE *program, variables *var, elements *elem)
         else if (*(text.counter) == '/')
         {
             elem->elements_[elem->curr_size_++] = create_tree_element(OPER, DIV, nullptr, nullptr);
+            text.counter++;
+        }
+        else if (*(text.counter) == '^')
+        {
+            elem->elements_[elem->curr_size_++] = create_tree_element(OPER, POW, nullptr, nullptr);
             text.counter++;
         }
         else if (*(text.counter) == '(')
@@ -231,6 +235,7 @@ void fill_tree (bin_tree *tree, FILE *program, variables *var, elements *elem)
 
     int counter = 0;
 
+    free(tree->root);
     tree->root = create_prog_tree(elem, &counter);
 
     destruct_text(&text);
@@ -239,6 +244,12 @@ void fill_tree (bin_tree *tree, FILE *program, variables *var, elements *elem)
     recalc_size_tree(tree->root, &size_tree);
     tree->tree_size = size_tree;
 
+    for (size_t i = 0; i < elem->curr_size_; i++)
+    {
+        if (elem->elements_[i]->type == BRACKET || elem->elements_[i]->type == FIG_BRACKET)
+            free(elem->elements_[i]);
+    }
+
     ASSERT_TREE_OK_VOID
 }
 
@@ -246,10 +257,42 @@ int is_keyword (char *temp_var_name, int *type)
 {
     *type = FUNC;
 
-    if (strncmp(temp_var_name, "scan", 4) == 0)
+    if (strncmp(temp_var_name, "sin", 3) == 0)
+        return SIN;
+    if (strncmp(temp_var_name, "cos", 3) == 0)
+        return COS;
+    else if (strncmp(temp_var_name, "tg", 2) == 0)
+        return TG;
+    else if (strncmp(temp_var_name, "ctg", 3) == 0)
+        return CTG;
+    else if (strncmp(temp_var_name, "arcsin", 6) == 0)
+        return ARCSIN;
+    else if (strncmp(temp_var_name, "arccos", 6) == 0)
+        return ARCCOS;
+    else if (strncmp(temp_var_name, "arctg", 5) == 0)
+        return ARCTG;
+    else if (strncmp(temp_var_name, "arcctg", 6) == 0)
+        return ARCCTG;
+    else if (strncmp(temp_var_name, "exp", 3) == 0)
+        return EXP;
+    else if (strncmp(temp_var_name, "sh", 2) == 0)
+        return SH;
+    else if (strncmp(temp_var_name, "ch", 2) == 0)
+        return CH;
+    else if (strncmp(temp_var_name, "th", 2) == 0)
+        return TH;
+    else if (strncmp(temp_var_name, "cth", 3) == 0)
+        return CTH;
+    else if (strncmp(temp_var_name, "ln", 2) == 0)
+        return LN;
+    else if (strncmp(temp_var_name, "deriv", 5) == 0)
+        return DERIV;
+    else if (strncmp(temp_var_name, "scan", 4) == 0)
         return SCAN;
     else if (strncmp(temp_var_name, "print", 5) == 0)
         return PRINT;
+    else if (strncmp(temp_var_name, "power", 5) == 0)
+        return POWER;
 
     *type = MAIN;
 
@@ -270,6 +313,7 @@ int is_keyword (char *temp_var_name, int *type)
         return RETURN;
 
     return -1;
+
 }
 
 int var_search (variables *var, char *temp_var_name)
@@ -570,7 +614,7 @@ bin_tree_elem *create_e_tree (elements *elem, int *counter)
 bin_tree_elem *create_t_tree (elements *elem, int *counter)
 {
     bin_tree_elem *prev_vertex = nullptr;
-    bin_tree_elem *vertex      = create_p_tree(elem, counter);
+    bin_tree_elem *vertex      = create_w_tree(elem, counter);
 
     if (*counter < elem->curr_size_ && elem->elements_[*counter]->type == OPER && ((int) elem->elements_[*counter]->value == MUL || (int) elem->elements_[*counter]->value == DIV))
     {
@@ -584,8 +628,48 @@ bin_tree_elem *create_t_tree (elements *elem, int *counter)
 
             (*counter)++;
 
-            vertex->right = create_p_tree(elem, counter);
+            vertex->right = create_w_tree(elem, counter);
         }
+    }
+
+    return vertex;
+}
+
+bin_tree_elem *create_w_tree (elements *elem, int *counter)
+{
+    bin_tree_elem *prev_vertex = nullptr;
+    bin_tree_elem *vertex      = create_p_tree(elem, counter);
+
+    if (*counter < elem->curr_size_ && elem->elements_[*counter]->type == OPER && (int) elem->elements_[*counter]->value == POW)
+    {
+        prev_vertex = vertex;
+
+        vertex = elem->elements_[*counter];
+
+        vertex->left = prev_vertex;
+
+        (*counter)++;
+
+        vertex->right = read_w_tree(elem, counter);
+    }
+
+    return vertex;
+}
+
+bin_tree_elem *read_w_tree (elements *elem, int *counter)
+{
+    bin_tree_elem *vertex = create_p_tree(elem, counter);
+
+    if (*counter < elem->curr_size_ && elem->elements_[*counter]->type == OPER && (int) elem->elements_[*counter]->value == POW)
+    {
+        bin_tree_elem *new_vertex = vertex;
+
+        vertex = elem->elements_[*counter];
+
+        (*counter)++;
+
+        vertex->left  = new_vertex;
+        vertex->right = read_w_tree(elem, counter);
     }
 
     return vertex;
@@ -637,7 +721,7 @@ bin_tree_elem *create_n_tree (elements *elem, int *counter)
         vertex = elem->elements_[*counter];
         (*counter)++;
     }
-    else if (elem->elements_[*counter]->type == FUNC)
+    else if (elem->elements_[*counter]->type == FUNC && (int) elem->elements_[*counter]->value != DERIV && (int) elem->elements_[*counter]->value != POWER)
     {
         bin_tree_elem *func_elem = elem->elements_[*counter];
         (*counter)++;
@@ -655,16 +739,64 @@ bin_tree_elem *create_n_tree (elements *elem, int *counter)
         func_elem->left = vertex;
         vertex = func_elem;
     }
-    
+    else if (elem->elements_[*counter]->type == FUNC && (int) elem->elements_[*counter]->value == DERIV)
+    {
+        bin_tree_elem *func_elem = elem->elements_[*counter];
+        bin_tree_elem *formula = nullptr;
+        (*counter)++;
+
+        if (*counter < elem->curr_size_ && elem->elements_[*counter]->type == BRACKET && (int) elem->elements_[*counter]->value == OPEN)
+        {
+            (*counter)++;
+
+            vertex = elem->elements_[*counter];
+
+            *counter += 2;
+
+            formula = create_e_tree(elem, counter);
+
+            if (*counter < elem->curr_size_ && elem->elements_[*counter]->type == BRACKET && (int) elem->elements_[*counter]->value == CLOSE)
+                (*counter)++;
+        }
+
+        func_elem->left  = vertex;
+        func_elem->right = formula;
+        vertex = func_elem;
+    }
+    else if (elem->elements_[*counter]->type == FUNC && (int) elem->elements_[*counter]->value == POWER)
+    {
+        bin_tree_elem *func_elem = elem->elements_[*counter];
+        bin_tree_elem *power = nullptr;
+        (*counter)++;
+
+        if (*counter < elem->curr_size_ && elem->elements_[*counter]->type == BRACKET && (int) elem->elements_[*counter]->value == OPEN)
+        {
+            (*counter)++;
+
+            vertex = create_e_tree(elem, counter);
+
+            (*counter)++;
+
+            power = create_e_tree(elem, counter);
+
+            if (*counter < elem->curr_size_ && elem->elements_[*counter]->type == BRACKET && (int) elem->elements_[*counter]->value == CLOSE)
+                (*counter)++;
+        }
+
+        func_elem->left  = vertex;
+        func_elem->right = power;
+        vertex = func_elem;
+    }
+
     return vertex;
 }
 
 void syntax_error(text_t *text, elements *elem, int line, const char *file)
 {
     assert(elem);
-    printf("Syntax error [%d line in cpp] (%s).\n"
+    fprintf(stderr, "Syntax error [%d line in cpp] (%s).\n"
            "Process of file-reading terminated. Please, use the right syntax.\n", line, file);
-    printf("You have an error in line %d in file: ", text->lines[text->line_counter].real_num_line + 1);
+    fprintf(stderr, "You have an error in line %ld in file: ", (long int) text->lines[text->line_counter].real_num_line + 1);
 
     switch(ERROR_STATE)
     {

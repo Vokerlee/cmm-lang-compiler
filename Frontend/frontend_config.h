@@ -1,10 +1,10 @@
 #ifndef FRONTEND_CONFIG_H_INCLUDED
 #define FRONTEND_CONFIG_H_INCLUDED
 
-const int MAX_PROJECT_TREE_ELEM = 10000;
+const int MAX_PROJECT_TREE_ELEM = 100000;
 
 const int MAX_VAR_NUM           = 100;
-const int MAX_VAR_NAME_LENGTH   = 40;
+const int MAX_VAR_NAME_LENGTH   = 128;
 const int MAX_ERROR_TEXT_LENGTH = 10;
 
 const int MAX_FUNC_PARAM      = 15;
@@ -20,12 +20,29 @@ enum operators
     SUB = '-',
     MUL = '*',
     DIV = '/',
+    POW = '^',
 };
 
 enum functions
 {
-    PRINT  = 1,
-    SCAN   = 2,
+    SIN    = 1,
+    COS    = 2,
+    TG     = 3,
+    CTG    = 4,
+    ARCSIN = 5,
+    ARCCOS = 6,
+    ARCTG  = 7,
+    ARCCTG = 8,
+    SH     = 9,
+    CH     = 10,
+    TH     = 11,
+    CTH    = 12,
+    EXP    = 13,
+    LN     = 14,
+    DERIV  = 15,
+    PRINT  = 16,
+    SCAN   = 17,
+    POWER  = 18,
 };
 
 enum type

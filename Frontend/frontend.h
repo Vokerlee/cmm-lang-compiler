@@ -1,6 +1,12 @@
 #ifndef FRONTEND_H_INCLUDED
 #define FRONTEND_H_INCLUDED
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <assert.h>
+
 #include "frontend_config.h"
 
 #include "tree.h"
@@ -44,7 +50,7 @@ struct elements
     int curr_size_ = 0;
 };
 
-void frontend (FILE *program, FILE *lang_tree);
+int frontend (FILE *program, FILE *lang_tree);
 
 void fill_tree (bin_tree *tree, FILE *formula, variables *var, elements *elem);
 
@@ -74,11 +80,17 @@ bin_tree_elem *create_e_tree          (elements *elem, int *counter);
 
 bin_tree_elem *create_t_tree          (elements *elem, int *counter);
 
+bin_tree_elem *create_w_tree          (elements *elem, int *counter);
+
+bin_tree_elem *read_w_tree            (elements *elem, int *counter);
+
 bin_tree_elem *create_p_tree          (elements *elem, int *counter);
 
 bin_tree_elem *create_n_tree          (elements *elem, int *counter);
 
 void syntax_error(text_t *text, elements *elem, int line, const char *file);
+
+const char *func_name (int value);
 
 const char *condition_name (int value);
 

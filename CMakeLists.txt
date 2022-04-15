@@ -69,22 +69,22 @@ add_library(${TREE_LIB_NAME} STATIC)
 target_include_directories(${TREE_LIB_NAME} PRIVATE ${TREE_LIB_NAME})
 target_sources(${TREE_LIB_NAME} PRIVATE ${TREE_LIB_SRC})
 
-# # CMM FRONTEND
+# CMM FRONTEND
 
-# set(LANG_FRONTEND_NAME "cmm_frontend")
+set(LANG_FRONTEND_NAME "cmm_frontend")
 
-# set(LANG_FRONTEND_SRC
-#     frontend/main.cpp
-#     frontend/parsing.cpp
-#     frontend/tree_recording.cpp
-# )
+set(LANG_FRONTEND_SRC
+    frontend/main.cpp
+    frontend/parsing.cpp
+    frontend/tree_recording.cpp
+)
 
-# add_executable(${LANG_FRONTEND_NAME} ${LANG_FRONTEND_SRC})
+add_executable(${LANG_FRONTEND_NAME} ${LANG_FRONTEND_SRC})
 
-# target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
-# target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
-# target_link_libraries(${LANG_FRONTEND_NAME} ${TEXT_LIB_PATH})
-# target_link_libraries(${LANG_FRONTEND_NAME} ${TREE_LIB_PATH})
+target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
+target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
+target_link_libraries(${LANG_FRONTEND_NAME} ${TEXT_LIB_PATH})
+target_link_libraries(${LANG_FRONTEND_NAME} ${TREE_LIB_PATH})
 
 # # LANG OPTIMIZER
 
