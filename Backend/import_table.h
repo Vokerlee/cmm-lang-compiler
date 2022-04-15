@@ -103,8 +103,6 @@ public:
 
         fwrite(table, sizeof(table[0]), size, file);
 
-        printf("%d\n", sizeof(thunk[0]) * (size - 1));
-
         fwrite(thunk, sizeof(thunk[0]), size - 1, file);
 
         for (size_t i = 0; i < size - 1; ++i)

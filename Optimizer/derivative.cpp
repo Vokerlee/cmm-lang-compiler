@@ -1,5 +1,7 @@
 #include "optimizer.h"
 
+#define L (element->left)
+#define R (element->right)
 #define dR derivate_tree(element->right, var_value)
 #define dL derivate_tree(element->left, var_value)
 

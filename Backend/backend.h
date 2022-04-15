@@ -57,7 +57,7 @@ void encode_command (bin_tree_elem *element, BYTE *text_section, variables *var)
 
 void encode_expr (bin_tree_elem *element, BYTE *text_section, variables *var);
 
-void find_func_var (bin_tree_elem *element, int *param, char *n_param, int first_loc_var);
+void find_func_var (bin_tree_elem *element, int *param, int *n_param, int first_loc_var);
 
 void encode_func (bin_tree_elem *vertex, BYTE *text_section, variables *var);
 

@@ -392,7 +392,7 @@ void encode_expr (bin_tree_elem *element, BYTE *text_section, variables *var)
     }
 }
 
-void find_func_var (bin_tree_elem *element, int *param, char *n_param, int first_loc_var)
+void find_func_var (bin_tree_elem *element, int *param, int *n_param, int first_loc_var)
 {
     if (element->left != nullptr)
         find_func_var(element->left, param, n_param, first_loc_var);
@@ -400,8 +400,9 @@ void find_func_var (bin_tree_elem *element, int *param, char *n_param, int first
     if (element->type == VAR)
     {
         int find_state = 0;
+        int n_params = *n_param;
 
-        for (int i = first_loc_var; i < *n_param; i++)
+        for (int i = first_loc_var; i < n_params; i++)
         {
             if (param[i] == (int) element->value)
             {
@@ -426,7 +427,7 @@ void find_func_var (bin_tree_elem *element, int *param, char *n_param, int first
 void encode_func (bin_tree_elem *vertex, BYTE *text_section, variables *var)
 {
     int *param = (int *) calloc(MAX_FUNC_PARAM, sizeof(int));
-    char n_param      = 0;
+    int n_param      = 0;
     int first_loc_var = 0;
 
     for (bin_tree_elem *elem = vertex->left; elem != nullptr; elem = elem->left)
@@ -481,9 +482,9 @@ void user_func_optimize (bin_tree_elem *element, int *param, int n_param)
         }
 
         if (find_state == 0 && element->value < n_param)
-            element->value += 100;   // the trick to mark the element of tree (for the future)
+            element->value += 128;   // the trick to mark the element of tree (for the future)
     }
-
+    
     if (element->right != nullptr)
         user_func_optimize(element->right, param, n_param);
 }

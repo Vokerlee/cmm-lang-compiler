@@ -4,7 +4,8 @@
 cmake_minimum_required (VERSION 3.8)
 
 # PROJECT PROPERTIES
-project ("CMM compiler" LANGUAGES CXX)
+project("CMM compiler" LANGUAGES CXX)
+set(CMAKE_CXX_FLAGS "-m32")
 
 #########################################################################
 
@@ -19,6 +20,7 @@ add_compile_options(
     -Wpedantic
 
     -Wno-variadic-macros
+    -Wno-format-contains-nul
     -Wno-unused-variable
     -Wno-unused-parameter
     -Wno-unused-function
@@ -44,7 +46,7 @@ find_library(TEXT_LIB_PATH NAMES text PATHS ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_
 
 if (NOT TEXT_LIB_PATH)
     set(TEXT_LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/libtext)
-    add_subdirectory(${TEXT_LIB_SRC_DIR} ${TEXT_LIB_DIR})
+    add_subdirectory(${TEXT_LIB_SRC_DIR} ${TEXT_LIB_DIR} ${PARENT_SCOPE})
     set(TEXT_LIB_PATH text)
 endif()
 

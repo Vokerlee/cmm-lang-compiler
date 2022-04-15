@@ -26,11 +26,8 @@
 #define TREE_CONSTR(name)          \
     construct_tree(&name, #name);
 
-#define L element->left
-#define R element->right
-#define cL copy_tree(element->left)
-#define cR copy_tree(element->right)
-
+#define cL (copy_tree(element->left))
+#define cR (copy_tree(element->right))
 
 struct bin_tree_elem
 {

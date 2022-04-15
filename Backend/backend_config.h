@@ -22,6 +22,7 @@ enum operators
     SUB = '-',
     MUL = '*',
     DIV = '/',
+    POW = '^',
 };
 
 enum functions

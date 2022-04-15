@@ -44,7 +44,7 @@ bool create_exe (bin_tree *tree, FILE *exe_file, variables *var)
 
     // --- END OF HEADERS
 
-    imprt_tabel imp_tabel;
+    import_tabel imp_tabel;
     imp_tabel.fill_default();
 
     EXIT_ADDR         = IMAGE_BASE + IMPORT_START + imp_tabel.get_proc_addr(0);

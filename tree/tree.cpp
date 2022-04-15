@@ -152,8 +152,8 @@ bin_tree_elem *create_tree_element (int type, double value, bin_tree_elem *left,
 
     element->type  = type;
     element->value = value;
-    L = left;
-    R = right;
+    element->left = left;
+    element->right = right;
 
     return element;
 }
@@ -172,11 +172,11 @@ bin_tree_elem *copy_tree (bin_tree_elem *element)
 {
     bin_tree_elem *new_elem = copy_tree_elem(element);
 
-    if (L != nullptr)
-        new_elem->left = copy_tree(L);
+    if (element->left != nullptr)
+        new_elem->left = copy_tree(element->left);
 
-    if (R != nullptr)
-        new_elem->right = copy_tree(R);
+    if (element->right != nullptr)
+        new_elem->right = copy_tree(element->right);
 
     return new_elem;
 }

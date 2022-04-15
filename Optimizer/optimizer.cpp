@@ -1,5 +1,8 @@
 #include "optimizer.h"
 
+#define L (element->left)
+#define R (element->right)
+
 #define SUBST_REC(elem1, elem2)                                           \
 {                                                                         \
     free(element->elem1);                                                 \
