@@ -18,7 +18,6 @@ add_compile_options(
     -Wall
     -Wpedantic
 
-    -Wno-int-to-pointer-cast
     -Wno-variadic-macros
     -Wno-unused-variable
     -Wno-unused-parameter
@@ -34,13 +33,7 @@ set(COMPILER_LIB_SRC "compiler_lib_src")
 
 # Simple and fast assembler library (sfasmlib)
 
-set(SFASM_LIB_PATH)
-set(SFASM_LIB_DIR "sfasmlib")
-find_file(SFASM_LIB_PATH NAMES sfasmlib PATHS ${CMAKE_CURRENT_SOURCE_DIR}/${SFASM_LIB_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-
-if (NOT SFASM_LIB_PATH)
-    message(FATAL_ERROR "Error: sfasmlib cannot be found")
-endif()
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/sfasmlib/sfasmlib.dll DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # TEXT LIBRARY
 
@@ -81,10 +74,8 @@ set(LANG_FRONTEND_SRC
 
 add_executable(${LANG_FRONTEND_NAME} ${LANG_FRONTEND_SRC})
 
-target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
-target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
-target_link_libraries(${LANG_FRONTEND_NAME} ${TEXT_LIB_PATH})
-target_link_libraries(${LANG_FRONTEND_NAME} ${TREE_LIB_PATH})
+target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR} PRIVATE ${TREE_LIB_SRC_DIR})
+target_link_libraries(${LANG_FRONTEND_NAME} ${TEXT_LIB_PATH} ${TREE_LIB_PATH})
 
 # LANG OPTIMIZER
 
@@ -100,10 +91,8 @@ set(LANG_OPTIMIZER_SRC
 
 add_executable(${LANG_OPTIMIZER_NAME} ${LANG_OPTIMIZER_SRC})
 
-target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
-target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
-target_link_libraries(${LANG_OPTIMIZER_NAME} ${TEXT_LIB_PATH})
-target_link_libraries(${LANG_OPTIMIZER_NAME} ${TREE_LIB_PATH})
+target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TEXT_LIB_SRC_DIR}  PRIVATE ${TREE_LIB_SRC_DIR})
+target_link_libraries(${LANG_OPTIMIZER_NAME} ${TEXT_LIB_PATH} ${TREE_LIB_PATH})
 
 # LANG REVERSED FRONTEND
 
@@ -117,26 +106,23 @@ set(CMM_REV_FRONTEND_SRC
 
 add_executable(${CMM_REV_FRONTEND_NAME} ${CMM_REV_FRONTEND_SRC})
 
-target_include_directories(${CMM_REV_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
-target_include_directories(${CMM_REV_FRONTEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
-target_link_libraries(${CMM_REV_FRONTEND_NAME} ${TEXT_LIB_PATH})
-target_link_libraries(${CMM_REV_FRONTEND_NAME} ${TREE_LIB_PATH})
+target_include_directories(${CMM_REV_FRONTEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR} PRIVATE ${TREE_LIB_SRC_DIR})
+target_link_libraries(${CMM_REV_FRONTEND_NAME} ${TEXT_LIB_PATH} ${TREE_LIB_PATH})
 
-# # LANG BACKEND
+# LANG_COMPILE
 
-# set(LANG_BACKEND_NAME "lang_backend")
+set(LANG_COMPILE_NAME "lang_compile")
 
-# set(LANG_BACKEND_SRC
-#     backend/main.cpp
-#     backend/backend.cpp
-#     backend/tree_reading.cpp
-# )
+set(LANG_COMPILE_SRC
+    backend/main.cpp
+    backend/backend.cpp
+    backend/exe_creator.cpp
+    backend/tree_reading.cpp
+)
 
-# add_executable(${LANG_BACKEND_NAME} ${LANG_BACKEND_SRC})
+add_executable(${LANG_COMPILE_NAME} ${LANG_COMPILE_SRC})
 
-# target_include_directories(${LANG_BACKEND_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
-# target_include_directories(${LANG_BACKEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
-# target_link_libraries(${LANG_BACKEND_NAME} ${TEXT_LIB_PATH})
-# target_link_libraries(${LANG_BACKEND_NAME} ${TREE_LIB_PATH})
+target_include_directories(${LANG_COMPILE_NAME} PRIVATE ${TEXT_LIB_SRC_DIR} PRIVATE ${TREE_LIB_SRC_DIR})
+target_link_libraries(${LANG_COMPILE_NAME} ${TEXT_LIB_PATH} ${TREE_LIB_PATH})
 
-# #########################################################################
+##########################################################################

@@ -26,8 +26,24 @@ enum operators
 
 enum functions
 {
-    PRINT  = 1,
-    SCAN   = 2,
+    SIN    = 1,
+    COS    = 2,
+    TG     = 3,
+    CTG    = 4,
+    ARCSIN = 5,
+    ARCCOS = 6,
+    ARCTG  = 7,
+    ARCCTG = 8,
+    SH     = 9,
+    CH     = 10,
+    TH     = 11,
+    CTH    = 12,
+    EXP    = 13,
+    LN     = 14,
+    DERIV  = 15,
+    PRINT  = 16,
+    SCAN   = 17,
+    POWER  = 18,
 };
 
 enum type
@@ -48,7 +64,6 @@ enum type
     RETURN      = 14,
     GLOB_VAR    = 15,
 };
-
 
 enum command
 {

@@ -339,14 +339,14 @@ void encode_expr (bin_tree_elem *element, BYTE *text_section, variables *var)
         CALL_ADDRS[CALL_COUNTER] = (DWORD*)(text_section + CODE_CURRENT_ADDR);
         CODE_CURRENT_ADDR += sizeof(DWORD);
         FUNC_CALL_NUMBER[CALL_COUNTER] = (WORD) element->value;
-        FUNC_PTR_CALLS[CALL_COUNTER++] = (WORD)CODE_CURRENT_ADDR;
+        FUNC_PTR_CALLS[CALL_COUNTER++] = (WORD) CODE_CURRENT_ADDR;
 
         PUT_WORD(ADD_ESP)
         PUT_DWORD(n_params * sizeof(DWORD))
 
         PUT_BYTE(POP_EDI)  
     }
-    else if (element->type == OPER && (int)element->value == ADD)
+    else if (element->type == OPER && (int) element->value == ADD)
     {
         encode_expr(element->left, text_section, var);
         PUT_BYTE(PUSH_EBX)
@@ -356,7 +356,7 @@ void encode_expr (bin_tree_elem *element, BYTE *text_section, variables *var)
 
         PUT_WORD(ADD_EBX_ECX)
     }
-    else if (element->type == OPER && (int)element->value == SUB)
+    else if (element->type == OPER && (int) element->value == SUB)
     {
         encode_expr(element->left, text_section, var);
         PUT_BYTE(PUSH_EBX)
@@ -367,7 +367,7 @@ void encode_expr (bin_tree_elem *element, BYTE *text_section, variables *var)
         PUT_WORD(SUB_ECX_EBX)
         PUT_WORD(MOV_EBX_ECX)
     }
-    else if (element->type == OPER && (int)element->value == MUL)
+    else if (element->type == OPER && (int) element->value == MUL)
     {
         encode_expr(element->left, text_section, var);
         PUT_BYTE(PUSH_EBX)
@@ -378,7 +378,7 @@ void encode_expr (bin_tree_elem *element, BYTE *text_section, variables *var)
         PUT_WORD(MUL_EBX)
         PUT_WORD(MOV_EBX_EAX)
     }
-    else if (element->type == OPER && (int)element->value == DIV)
+    else if (element->type == OPER && (int) element->value == DIV)
     {
         encode_expr(element->left, text_section, var);
         PUT_BYTE(PUSH_EBX)

@@ -37,7 +37,7 @@ struct import_name
     }
 };
 
-class imprt_tabel
+class import_tabel
 {
 private:
     size_t size;
@@ -48,7 +48,7 @@ private:
     size_t align_size;
 
 public:
-    imprt_tabel(size_t sz = 3) :
+    import_tabel(size_t sz = 3) :
         size(sz + 1),
         name_imp(nullptr),
         names_size(0),
@@ -126,7 +126,7 @@ public:
         return sizeof(table[0]) * size + sizeof(thunk[0]) * (size - 1) + names_size + num * sizeof(thunk[0]);
     }
 
-    ~imprt_tabel(void)
+    ~import_tabel(void)
     {
         if (table != nullptr)
         {
