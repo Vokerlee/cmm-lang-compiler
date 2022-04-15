@@ -1,0 +1,3 @@
+[submodule "Compiler-technologies"]
+	path = compiler_lib_src
+	url = https://github.com/Vokerlee/Compiler-technologies
