@@ -19,14 +19,9 @@ add_compile_options(
     -Wall
     -Wpedantic
 
-    -Wno-variadic-macros
+    -Wno-multichar
     -Wno-format-contains-nul
-    -Wno-unused-variable
-    -Wno-unused-parameter
-    -Wno-unused-function
     -Wno-sign-compare
-    -Wno-misleading-indentation
-    -Wno-unused-but-set-variable
 )
 
 #########################################################################

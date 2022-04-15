@@ -486,7 +486,6 @@ bin_tree_elem *create_cmd_tree (elements *elem, int *counter)
         command = elem->elements_[*counter];
         (*counter)++;
 
-        bin_tree_elem *bracket1 = elem->elements_[*counter];
         (*counter)++;
 
         bin_tree_elem *condition_left = create_e_tree(elem, counter);
@@ -495,20 +494,14 @@ bin_tree_elem *create_cmd_tree (elements *elem, int *counter)
         (*counter)++;
 
         bin_tree_elem *condition_right = create_e_tree(elem, counter);
-
-        bin_tree_elem *bracket2 = elem->elements_[*counter];
         (*counter)++;
 
         condition->left  = condition_left;
         condition->right = condition_right;
         command->left = condition;
 
-        bracket1 = elem->elements_[*counter];
         (*counter)++;
-
         command->right = create_body_tree(elem, counter);
-
-        bracket2 = elem->elements_[*counter];
         (*counter)++;
 
     }
@@ -516,7 +509,6 @@ bin_tree_elem *create_cmd_tree (elements *elem, int *counter)
     {
         command = elem->elements_[*counter];
         command->type = USER_FUNC;
-
         *counter += 2;
 
         command->left = create_param_func_tree(elem, counter);
@@ -534,28 +526,17 @@ bin_tree_elem *create_cmd_tree (elements *elem, int *counter)
     else if (elem->elements_[*counter]->type == FUNC && (int) elem->elements_[*counter]->value == SCAN)
     {
         command = elem->elements_[*counter];
-        (*counter)++;
-
-        bin_tree_elem *bracket = elem->elements_[*counter];
-        (*counter)++;
+        *counter += 2;
 
         command->left = elem->elements_[*counter];
-        (*counter)++;
-
-        bracket = elem->elements_[*counter];
-        (*counter)++;
+        *counter += 2;
     }
     else if (elem->elements_[*counter]->type == FUNC && (int) elem->elements_[*counter]->value == PRINT)
     {
         command = elem->elements_[*counter];
-        (*counter)++;
-
-        bin_tree_elem *bracket = elem->elements_[*counter];
-        (*counter)++;
-
+        *counter += 2;
+        
         command->left = create_e_tree(elem, counter);
-
-        bracket = elem->elements_[*counter];
         (*counter)++;
     }
     else
@@ -711,8 +692,7 @@ bin_tree_elem *create_n_tree (elements *elem, int *counter)
         *counter += 2;
 
         vertex->left = create_param_func_tree(elem, counter);
-
-        bin_tree_elem *bracket = elem->elements_[*counter];
+        
         (*counter)++;
 
     }

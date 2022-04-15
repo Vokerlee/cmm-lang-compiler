@@ -108,7 +108,6 @@ bin_tree_elem *fill_tree (text_t *text, variables *var)
 
         char *temp_var_name = (char *) calloc(MAX_VAR_NAME_LENGTH + 1, sizeof(char));
         char *start = text->counter;
-        int num_var = 0;
 
         if (isalpha(*(text->counter)))
         {
