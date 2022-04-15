@@ -13,8 +13,6 @@ void record_tree (bin_tree *tree, variables *var, FILE *lang_tree)
     fprintf(lang_tree, "{");
     write_in_tree_file(tree->root, lang_tree, var);
     fprintf(lang_tree, "}");
-
-    fclose(lang_tree);
 }
 
 void write_in_tree_file (bin_tree_elem *element, FILE *lang_tree, variables *var)
@@ -76,9 +74,14 @@ void write_in_tree_file (bin_tree_elem *element, FILE *lang_tree, variables *var
         fprintf(lang_tree, " $print {");
         PRE_ORDER_REC
     }
-    else if (element->type == USER_FUNC || element->type == FUNC)
+    else if (element->type == USER_FUNC)
     {
         fprintf(lang_tree, " $%s {", var->var[(int) element->value]);
+        PRE_ORDER_REC
+    }
+    else if (element->type == FUNC)
+    {
+        fprintf(lang_tree, " %s {", func_name(element->value));
         PRE_ORDER_REC
     }
     else if (element->type == VAR || element->type == GLOB_VAR)
@@ -101,12 +104,10 @@ const char *func_name (int value)
             return "$sin";
         case COS:
             return "$cos";
-        case DERIV:
-            return "$deriv";
-        case POWER:
-            return "$power";
         case TG:
             return "$tg";
+        case CTG:
+            return "$ctg";
         case ARCSIN:
             return "$arcsin";
         case ARCCOS:
@@ -115,9 +116,27 @@ const char *func_name (int value)
             return "$arctg";
         case ARCCTG:
             return "$sin";
+        case SH:
+            return "$sh";
+        case CH:
+            return "$ch";
+        case TH:
+            return "$th";
+        case CTH:
+            return "$cth";
         case LN:
             return "$ln";
+        case EXP:
+            return "$exp";
+        case DERIV:
+            return "$deriv";
+        case POWER:
+            return "$power";
+        default:
+            return NULL;
     }
+
+    return NULL;
 }
 
 const char *condition_name (int value)
@@ -136,5 +155,7 @@ const char *condition_name (int value)
             return "<";
         case JBE:
             return "<=";
+        default:
+            return NULL;
     }
 }

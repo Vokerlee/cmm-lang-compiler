@@ -79,6 +79,8 @@ bin_tree_elem *derivate_tree (bin_tree_elem *element, int var_value)
                     return MULTIPLY(create_tree_element(OPER, DIV, CR_NUM(1), create_tree_element(OPER, POW, create_tree_element(FUNC, SH, cL, nullptr), CR_NUM(2))), dL);
                 case LN:
                     return MULTIPLY(DIVIDE(CR_NUM(1), cL), dL);
+                case EXP:
+                    return MULTIPLY(copy_tree(element), dL);
                 default:
                     break;
             }
@@ -86,8 +88,10 @@ bin_tree_elem *derivate_tree (bin_tree_elem *element, int var_value)
         case USER_FUNC:
             return CR_NUM(1);
         default:
-            break;
+            return NULL;
     }
+
+    return NULL;
 }
 
 void print_func_text (int value, FILE *tex)
@@ -156,9 +160,14 @@ void print_func_text (int value, FILE *tex)
             fprintf(tex, "cth");
             break;
         }
-        case LN :
+        case LN:
         {
             fprintf(tex, "ln");
+            break;
+        }
+        case EXP:
+        {
+            fprintf(tex, "exp");
             break;
         }
         default:

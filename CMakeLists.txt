@@ -86,24 +86,24 @@ target_include_directories(${LANG_FRONTEND_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
 target_link_libraries(${LANG_FRONTEND_NAME} ${TEXT_LIB_PATH})
 target_link_libraries(${LANG_FRONTEND_NAME} ${TREE_LIB_PATH})
 
-# # LANG OPTIMIZER
+# LANG OPTIMIZER
 
-# set(LANG_OPTIMIZER_NAME "lang_optimizer")
+set(LANG_OPTIMIZER_NAME "lang_optimizer")
 
-# set(LANG_OPTIMIZER_SRC
-#     optimizer/main.cpp
-#     optimizer/derivative.cpp
-#     optimizer/optimizer.cpp
-#     optimizer/tree_reading.cpp
-#     optimizer/tree_recording.cpp
-# )
+set(LANG_OPTIMIZER_SRC
+    optimizer/main.cpp
+    optimizer/derivative.cpp
+    optimizer/optimizer.cpp
+    optimizer/tree_reading.cpp
+    optimizer/tree_recording.cpp
+)
 
-# add_executable(${LANG_OPTIMIZER_NAME} ${LANG_OPTIMIZER_SRC})
+add_executable(${LANG_OPTIMIZER_NAME} ${LANG_OPTIMIZER_SRC})
 
-# target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
-# target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
-# target_link_libraries(${LANG_OPTIMIZER_NAME} ${TEXT_LIB_PATH})
-# target_link_libraries(${LANG_OPTIMIZER_NAME} ${TREE_LIB_PATH})
+target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TEXT_LIB_SRC_DIR})
+target_include_directories(${LANG_OPTIMIZER_NAME} PRIVATE ${TREE_LIB_SRC_DIR})
+target_link_libraries(${LANG_OPTIMIZER_NAME} ${TEXT_LIB_PATH})
+target_link_libraries(${LANG_OPTIMIZER_NAME} ${TREE_LIB_PATH})
 
 # # LANG REVERSED FRONTEND
 

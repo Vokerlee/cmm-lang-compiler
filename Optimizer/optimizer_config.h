@@ -1,7 +1,7 @@
 #ifndef OPTIMIZER_CONFIG_H_INCLUDED
 #define OPTIMIZER_CONFIG_H_INCLUDED
 
-const int MAX_FILE_LENGTH = 200;
+const int MAX_FILE_LENGTH = 256;
 
 const int MAX_VAR_NUM           = 100;
 const int MAX_OPER_ROW          = 20;
@@ -37,11 +37,12 @@ enum functions
     CH     = 10,
     TH     = 11,
     CTH    = 12,
-    LN     = 13,
-    DERIV  = 14,
-    PRINT  = 15,
-    SCAN   = 16,
-    POWER  = 17,
+    EXP    = 13,
+    LN     = 14,
+    DERIV  = 15,
+    PRINT  = 16,
+    SCAN   = 17,
+    POWER  = 18,
 };
 
 enum type

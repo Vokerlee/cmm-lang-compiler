@@ -1,6 +1,12 @@
 #ifndef OPTIMIZER_H_INCLUDED
 #define OPTIMIZER_H_INCLUDED
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <assert.h>
+
 #include "optimizer_config.h"
 #include "derivative.h"
 
