@@ -1,5 +1,7 @@
 # CMM Compiler
 
+**Almost the whole codebase of the project was written in the 2st semester (1st year) of study at MIPT.**
+
 CMM Compiler is an advanced version of CMM language pack with translation program-code directly to executable file `.exe`.
 
 ## CMM Syntax
